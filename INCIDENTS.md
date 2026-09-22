@@ -17,12 +17,12 @@ arbitrary checks get deleted. The rationale is the load-bearing part.
 ## 2026-09-22 — `project(<name> VERSION x.y.z CXX)` does not configure at all
 
 What broke:        Wiring the `version` stage needs a `project()` VERSION for the gate to parse, and
-                   the obvious edit — adding `VERSION 1.0.0` in front of the existing bare `CXX`
+                   the obvious edit — adding `VERSION 0.1.0` in front of the existing bare `CXX`
                    language argument — is rejected outright by CMake 3.31.6:
                    `CMake Error at CMakeLists.txt:2 (project): project with VERSION, DESCRIPTION or
                    HOMEPAGE_URL must use LANGUAGES before language names.` Nothing configured, so
                    nothing built; the failure is at configure time, not at the version check.
-                   The fix is one word: `project(unicode_checker VERSION 1.0.0 LANGUAGES CXX)`.
+                   The fix is one word: `project(unicode_checker VERSION 0.1.0 LANGUAGES CXX)`.
                    It matters because the bare form is what the repo had and what a hurried edit
                    reproduces, and the error names `project` rather than `VERSION`, which reads
                    like the version stage's own requirement is unsatisfiable here. It is not.
