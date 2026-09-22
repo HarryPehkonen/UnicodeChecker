@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "report.h"
+#include "version.hpp"
 
 namespace {
 
@@ -23,10 +24,16 @@ bool read_file(const std::string& path, std::vector<std::uint8_t>& bytes) {
 int main(int argc, char** argv) {
     if (argc != 2) {
         std::cerr << "usage: unicode_checker <filepath>\n";
+        std::cerr << "       unicode_checker --version\n";
         return 2;
     }
 
     const std::string path = argv[1];
+    if (path == "--version" || path == "-V") {
+        std::cout << "unicode_checker " << UNICODE_CHECKER_VERSION << '\n';
+        return 0;
+    }
+
     std::vector<std::uint8_t> bytes;
     if (!read_file(path, bytes)) {
         std::cerr << "unicode_checker: cannot read '" << path << "'\n";

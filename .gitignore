@@ -67,3 +67,9 @@ vcpkg_installed/
 # test output & cache
 Testing/
 .cache/
+
+# the gate's own footprint (AI-DEV-STARTER, PLUNK-IN step 3)
+# build/ and build-*/ are already ignored above; the gate also creates
+# build-asan/, build-tsan/ and build-release/, which those rules cover.
+.ci-logs/
+.ci.env

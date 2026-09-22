@@ -1,0 +1,75 @@
+{
+  "kit": "AI-DEV-STARTER",
+  "url": "https://github.com/HarryPehkonen/AI-DEV-STARTER",
+  "revision": "9f3ff726ae5bcf0b45ccde51d2582a6dd0b0edab",
+  "recorded_at": "2026-09-22",
+  "record_kind": "at-copy",
+  "record_note": "UnicodeChecker was wired to the kit on 2026-09-22 on branch process/plunk-in-the-gate, taking every artifact below from kit revision 9f3ff726 in one sitting (PLUNK-IN rung 5). CLAUDE.md is deliberately absent: the kit's rung-1 contract requires Harri's explicit approval and he was not present for this run, so no CLAUDE.md or AGENTS.md was created and none is listed here. INCIDENTS.md is the one adapted file -- the kit's log verbatim plus this repo's own entries on top. The adopted_fixes[] block was added by the follow-up record-only commit named in adopted_in, because a commit cannot name itself.",
+  "adopted_fixes": [],
+  "files": [
+    {
+      "repo_path": "tools/ci.sh",
+      "kit_path": "templates/cpp/ci.sh",
+      "repo_sha256": "166e0042aa81ce24874c994a756e0c62d435da31398cd8d79d81d7600e554191",
+      "kit_sha256": "166e0042aa81ce24874c994a756e0c62d435da31398cd8d79d81d7600e554191",
+      "adapted": false
+    },
+    {
+      "repo_path": ".ci.env.example",
+      "kit_path": "templates/cpp/.ci.env.example",
+      "repo_sha256": "eee5264aaa1b120fcd76685879559aae15bbf0fe39c45cfb0c4726d026709556",
+      "kit_sha256": "eee5264aaa1b120fcd76685879559aae15bbf0fe39c45cfb0c4726d026709556",
+      "adapted": false
+    },
+    {
+      "repo_path": ".githooks/pre-commit",
+      "kit_path": "templates/hooks/pre-commit",
+      "repo_sha256": "e304ddcb48e216029c8e77402d927695dae4895532f6bf12d1ecb54604b652d8",
+      "kit_sha256": "e304ddcb48e216029c8e77402d927695dae4895532f6bf12d1ecb54604b652d8",
+      "adapted": false
+    },
+    {
+      "repo_path": ".githooks/pre-push",
+      "kit_path": "templates/hooks/pre-push",
+      "repo_sha256": "f3ee3909b042ba74728f09b8c68aa2a82f23fe212ebea1f79aae89f5cef9ca07",
+      "kit_sha256": "f3ee3909b042ba74728f09b8c68aa2a82f23fe212ebea1f79aae89f5cef9ca07",
+      "adapted": false
+    },
+    {
+      "repo_path": "INCIDENTS.md",
+      "kit_path": "INCIDENTS.md",
+      "repo_sha256": "05007c1e5a6b4fbaf350a7215b93b47c3a4318fd10c3eb218b066e24b236e824",
+      "kit_sha256": "e6e636dbdd3e26c727aff5045c8d50427d79c41011b0c6ace1172e76ca099e0f",
+      "adapted": true,
+      "adapted_why": "the kit's log verbatim, with this repo's own three 2026-09-22 entries inserted above the kit's newest entry (the CMake project(VERSION) form, the unaccountable build/ tree, and the .clang-format residue)"
+    },
+    {
+      "repo_path": "tools/kit-probes/gate-stage-guards.sh",
+      "kit_path": "probes/gate-stage-guards.sh",
+      "repo_sha256": "0a9f752c5081d6cc61b0f478ebee356d1358c7aca9562643411249901178be86",
+      "kit_sha256": "0a9f752c5081d6cc61b0f478ebee356d1358c7aca9562643411249901178be86",
+      "adapted": false
+    },
+    {
+      "repo_path": "tools/kit-probes/git-index-file.sh",
+      "kit_path": "probes/git-index-file.sh",
+      "repo_sha256": "6818e5d5b049edc250dc5b7cd1e620917cf80afef0bbade83b8cbb690ddc27e6",
+      "kit_sha256": "6818e5d5b049edc250dc5b7cd1e620917cf80afef0bbade83b8cbb690ddc27e6",
+      "adapted": false
+    },
+    {
+      "repo_path": "tools/kit-probes/optimized-stage.sh",
+      "kit_path": "probes/optimized-stage.sh",
+      "repo_sha256": "d0d7a184ebbe7847c1366983b0b6ff72c86eb2ea2eaba130aa46b132b0a29c25",
+      "kit_sha256": "d0d7a184ebbe7847c1366983b0b6ff72c86eb2ea2eaba130aa46b132b0a29c25",
+      "adapted": false
+    },
+    {
+      "repo_path": "tools/kit-probes/tidy-baseline.sh",
+      "kit_path": "probes/tidy-baseline.sh",
+      "repo_sha256": "efd9bbca108bb7bd1e527d95d09546c1b3bceca451054367b2fed6f92bfc6379",
+      "kit_sha256": "efd9bbca108bb7bd1e527d95d09546c1b3bceca451054367b2fed6f92bfc6379",
+      "adapted": false
+    }
+  ]
+}

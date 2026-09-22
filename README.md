@@ -29,10 +29,16 @@ are needed.
 
 ```sh
 unicode_checker <filepath>
+unicode_checker --version        # or -V
 ```
 
 Output goes to stdout. Exit status is `0` on success even when findings are
 reported, `1` when the file cannot be read, and `2` on a usage error.
+
+The version number has one source, `project(unicode_checker VERSION ...)` in
+`CMakeLists.txt`; `cmake/version.hpp.in` is configured into the build tree as
+`generated/version.hpp` so the binary can report it, and the gate's `version`
+stage checks the two copies against each other and against the binary.
 
 Example:
 
@@ -140,10 +146,32 @@ Works on raw bytes rather than codepoints:
   UTF-16BE. At least two whole pairs are required as evidence.
 - Counts **leading NUL bytes**.
 
+## Gate
+
+The repo is wired to the [AI-DEV-STARTER](https://github.com/HarryPehkonen/AI-DEV-STARTER)
+kit (rung 5); `.ai-dev-starter.json` records the kit revision and the SHA-256 of
+every copied artifact.
+
+```sh
+tools/ci.sh                     # the full tier
+tools/ci.sh build tests         # the fast tier, what pre-commit runs
+```
+
+The two git hooks live in `.githooks/` and have to be armed once per clone —
+git never copies hooks for you:
+
+```sh
+git config core.hooksPath .githooks
+```
+
+`INCIDENTS.md` is the log of real failures and the check that now catches each
+one. Read it before deleting a check.
+
 ## Layout
 
 ```
 CMakeLists.txt          C++17, builds the core library, CLI and tests
+cmake/version.hpp.in    configured into the build tree as generated/version.hpp
 src/main.cpp            CLI entry point
 src/detect_bom.*        BOM table
 src/detect_utf8.*       UTF-8 state machine and decoder

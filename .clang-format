@@ -1,0 +1,17 @@
+# The style the tree already uses, written down so the gate's format stage can
+# check it: LLVM, with 4-space indents, a 100-column line, pointers and
+# references bound to the type, indented case labels and two spaces before a
+# trailing comment. Nothing here restyles the existing code -- the acceptance
+# test is `clang-format --dry-run -Werror src/*.cpp src/*.h tests/*.cpp`
+# coming back clean on the tree as it stands.
+BasedOnStyle: LLVM
+IndentWidth: 4
+ColumnLimit: 100
+AccessModifierOffset: -4
+DerivePointerAlignment: false
+PointerAlignment: Left
+ReferenceAlignment: Left
+IndentCaseLabels: true
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: WithoutElse
+SpacesBeforeTrailingComments: 2
