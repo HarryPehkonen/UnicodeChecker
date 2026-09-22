@@ -8,6 +8,7 @@ add_executable(unicode_checker_test
     invisible_test.cpp
     nonchar_test.cpp
     nul_test.cpp
+    tags_test.cpp
 )
 target_link_libraries(unicode_checker_test PRIVATE unicode_checker_core GTest::gtest)
 

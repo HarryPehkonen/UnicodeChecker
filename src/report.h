@@ -9,6 +9,7 @@
 #include "detect_invisible.h"
 #include "detect_nonchar.h"
 #include "detect_nul.h"
+#include "detect_tags.h"
 #include "detect_utf8.h"
 
 namespace uc {
@@ -22,6 +23,7 @@ struct Report {
     std::string bom_hex;
     Utf8Result utf8;
     std::vector<InvisibleFinding> invisible;
+    TagsResult tags;
     std::vector<NonCharFinding> noncharacters;
     NulResult nul;
 };

@@ -2,7 +2,8 @@
 
 A command-line tool that scans a file's bytes and reports interesting things
 about them: byte order marks, UTF-8 well-formedness, invisible and bidi
-control characters, noncharacters, and NUL patterns.
+control characters, the Unicode Tags block (U+E0000–U+E007F), noncharacters,
+and NUL patterns.
 
 The tool is a **reporter, not a decider**. It lists evidence and never
 declares which encoding a file "really" is.
@@ -62,6 +63,11 @@ size: 35 bytes
 [Invisible / Zero-Width / Bidi]
   U+200B Zero Width Space at byte 18
   U+00AD Soft Hyphen at byte 22
+
+[Unicode Tags (Plane 14)]
+  Tag characters: 1 (hidden text: 1, inside emoji flag sequences: 0)
+  hidden text at byte 3: 1 tag character, payload "a"
+  U+E0061 'a' at byte 3
 
 [Noncharacters / Controls]
   noncharacter U+FFFF at byte 24
@@ -126,6 +132,34 @@ and pop), U+2060 (word joiner), U+2061–U+2064 (invisible operators), U+00AD
 U+FEFF is only a finding when it is *not* at offset 0 — at offset 0 it is the
 byte order mark, which the BOM detector already reports.
 
+### Unicode Tags — `src/detect_tags.*`
+
+The Tags block, U+E0000–U+E007F: 128 deprecated in-band language-tag
+characters. Every one of them is default-ignorable — no glyph, no advance
+width — and each mirrors an ASCII character (`U+E00XX` carries `0xXX`), so a
+run of them is a second text that a reader never sees and a parser reads in
+full. That is what makes the block worth smuggling with: `fun` + `U+E0061` +
+`ding` walks past an exact-match keyword filter while reading as "funding" to
+the eye, and the same trick hides instructions in text that only a model reads.
+
+The detector reports every tag character with its byte offset and the
+character it mirrors, then each contiguous run with the text it carries — the
+payload, reassembled, with the ones that mirror nothing printable named
+(`<LANGUAGE TAG>`, `<CANCEL TAG>`, `<U+E0012>`) rather than written out as
+control bytes.
+
+The block has a legitimate use and the detector says which is which: a tag run
+directly after U+1F3F4 (black flag) and closed by U+E007F is a
+regional-subdivision flag emoji (England is `U+1F3F4` + `gbeng` + `U+E007F`),
+counted separately and never as hidden text. A run missing either half — no
+black flag in front, or no U+E007F at the end — is hidden text.
+
+Plane 14 is not the block: U+E0080–U+E00FF is unassigned and U+E0100–U+E01EF is
+the variation-selector range. Neither is reported here.
+
+This detector reports; it does not strip, rewrite or sanitize. If a caller
+wants the tags gone, removing them is the caller's decision.
+
 ### Noncharacters / controls — `src/detect_nonchar.*`
 
 Also runs over the decoded codepoints:
@@ -176,6 +210,7 @@ src/main.cpp            CLI entry point
 src/detect_bom.*        BOM table
 src/detect_utf8.*       UTF-8 state machine and decoder
 src/detect_invisible.*  zero-width / bidi scan
+src/detect_tags.*       Unicode Tags block (Plane 14) and its payloads
 src/detect_nonchar.*    noncharacters, surrogates, C1 controls
 src/detect_nul.*        NUL counting and UTF-16 interleave heuristics
 src/report.*            Report struct, accumulator, plain-text formatter
