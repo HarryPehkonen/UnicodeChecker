@@ -5,7 +5,32 @@
   "recorded_at": "2026-09-22",
   "record_kind": "at-copy",
   "record_note": "UnicodeChecker was wired to the kit on 2026-09-22 on branch process/plunk-in-the-gate, taking every artifact below from kit revision 9f3ff726 in one sitting (PLUNK-IN rung 5). CLAUDE.md is deliberately absent: the kit's rung-1 contract requires Harri's explicit approval and he was not present for this run, so no CLAUDE.md or AGENTS.md was created and none is listed here. INCIDENTS.md is the one adapted file -- the kit's log verbatim plus this repo's own entries on top. The adopted_fixes[] block was added by the follow-up record-only commit named in adopted_in, because a commit cannot name itself.",
-  "adopted_fixes": [],
+  "adopted_fixes": [
+    {
+      "name": "tidy-baseline",
+      "from_revision": "a6ad2ea6951c66eb5b7c2eea8757ab8d3311174e",
+      "probe": "probes/tidy-baseline.sh",
+      "adopted_in": "feac533"
+    },
+    {
+      "name": "gate-stage-guards",
+      "from_revision": "951608c2675a2f5c2d0b59d9c19c632d23a043af",
+      "probe": "probes/gate-stage-guards.sh",
+      "adopted_in": "feac533"
+    },
+    {
+      "name": "optimized-stage",
+      "from_revision": "d531a110184125ed108c3eabc36834bb803404bb",
+      "probe": "probes/optimized-stage.sh",
+      "adopted_in": "feac533"
+    },
+    {
+      "name": "git-index-file",
+      "from_revision": "f9c33005d880df095d7a5ab300d1ec5349c59aea",
+      "probe": "probes/git-index-file.sh",
+      "adopted_in": "feac533"
+    }
+  ],
   "files": [
     {
       "repo_path": "tools/ci.sh",
