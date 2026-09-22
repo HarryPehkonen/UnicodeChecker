@@ -36,8 +36,8 @@ NulResult detect_nul(const std::vector<std::uint8_t>& bytes) {
     }
 
     if (!bytes.empty()) {
-        result.nul_ratio = static_cast<double>(result.nul_count) /
-                           static_cast<double>(bytes.size());
+        result.nul_ratio =
+            static_cast<double>(result.nul_count) / static_cast<double>(bytes.size());
     }
     result.binary_like = result.nul_ratio > kBinaryNulRatio;
 

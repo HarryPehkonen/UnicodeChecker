@@ -30,8 +30,8 @@ struct Utf8Result {
     std::size_t out_of_range_codepoints = 0;
     std::size_t invalid_continuation_bytes = 0;
     std::size_t lone_continuation_bytes = 0;
-    std::size_t invalid_start_bytes = 0;   // F8..FF, which lead nothing
-    std::size_t truncated_sequences = 0;   // input ended mid-sequence
+    std::size_t invalid_start_bytes = 0;  // F8..FF, which lead nothing
+    std::size_t truncated_sequences = 0;  // input ended mid-sequence
     // Every sequence whose shape decoded, including the ill-formed ones, so
     // that later detectors can inspect what an attacker tried to smuggle.
     std::vector<DecodedCodepoint> codepoints;

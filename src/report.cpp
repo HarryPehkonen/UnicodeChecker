@@ -58,8 +58,8 @@ std::string format_report(const Report& report) {
         out << "  none\n";
     }
     for (const InvisibleFinding& finding : report.invisible) {
-        out << "  " << format_codepoint(finding.codepoint) << ' ' << finding.name
-            << " at byte " << finding.offset << '\n';
+        out << "  " << format_codepoint(finding.codepoint) << ' ' << finding.name << " at byte "
+            << finding.offset << '\n';
     }
 
     out << "\n[Noncharacters / Controls]\n";
@@ -67,8 +67,8 @@ std::string format_report(const Report& report) {
         out << "  none\n";
     }
     for (const NonCharFinding& finding : report.noncharacters) {
-        out << "  " << nonchar_kind_name(finding.kind) << ' '
-            << format_codepoint(finding.codepoint) << " at byte " << finding.offset << '\n';
+        out << "  " << nonchar_kind_name(finding.kind) << ' ' << format_codepoint(finding.codepoint)
+            << " at byte " << finding.offset << '\n';
     }
 
     out << "\n[NUL / Binary]\n";

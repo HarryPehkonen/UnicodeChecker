@@ -11,8 +11,8 @@ namespace uc {
 
 struct InvisibleFinding {
     std::uint32_t codepoint = 0;
-    std::size_t offset = 0;   // byte offset of the encoded character
-    const char* name = "";    // Unicode character name
+    std::size_t offset = 0;  // byte offset of the encoded character
+    const char* name = "";   // Unicode character name
 };
 
 // Reports zero-width, invisible and bidi-control characters.
