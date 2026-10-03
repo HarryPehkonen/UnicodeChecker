@@ -14,6 +14,28 @@ arbitrary checks get deleted. The rationale is the load-bearing part.
 
 ---
 
+## 2026-09-22 — the push gate ran eleven stages of twelve, and said GATE PASSED
+
+What broke:        The `install` stage was added to `tools/ci.sh` and to `CI_DEFAULT_STAGES`,
+                   and a hand run executed it. But `.githooks/pre-push` carried its own explicit
+                   stage list — the kit ships one deliberately — so the push ran eleven stages,
+                   skipped the new one, and printed `all 11 stage(s) passed ... GATE PASSED`.
+                   Every word of that is true and the outcome is wrong: a stage that exists but
+                   never runs is a decoration, and the verdict cannot show what it left out.
+                   Found by comparing the push log's stage count against the hand run's (11 vs
+                   12), which is the only place the difference was visible.
+Check added:       `.githooks/pre-push` no longer passes a stage list at all: it calls
+                   `tools/ci.sh --require-clean`, so a push runs whatever `CI_DEFAULT_STAGES`
+                   says and the two cannot drift apart. Kit rule "one definition, N callers" —
+                   a second list is a second definition. Verified by running the hook by hand:
+                   `local CI — 12 stage(s): … install …`.
+Why it must stay:  Two lists can never be proved equal, and the one that decides what a push
+                   actually checks is the one nobody reads. The hooks are the callers a reader of
+                   the gate script cannot inspect, so they must not own a list. With the list
+                   gone, the next stage added is on the push automatically.
+
+---
+
 ## 2026-09-22 — a directory argument aborted the tool instead of being reported
 
 What broke:        `unicode_checker .` printed

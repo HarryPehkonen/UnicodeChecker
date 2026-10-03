@@ -57,14 +57,15 @@
     {
       "repo_path": ".githooks/pre-push",
       "kit_path": "templates/hooks/pre-push",
-      "repo_sha256": "f3ee3909b042ba74728f09b8c68aa2a82f23fe212ebea1f79aae89f5cef9ca07",
+      "repo_sha256": "1b9c5910f8ce7688013e57fd3bf74cb38ad3eca7b647becdafac15bf22931e65",
       "kit_sha256": "f3ee3909b042ba74728f09b8c68aa2a82f23fe212ebea1f79aae89f5cef9ca07",
-      "adapted": false
+      "adapted": true,
+      "adapted_why": "no stage list: the hook calls `tools/ci.sh --require-clean`, so a push runs whatever CI_DEFAULT_STAGES says. The kit ships an explicit list on purpose (so a stage cannot be silently dropped); measured here, the explicit list instead went STALE the moment a stage was added -- the push ran 11 of 12 stages and printed GATE PASSED. One definition, N callers."
     },
     {
       "repo_path": "INCIDENTS.md",
       "kit_path": "INCIDENTS.md",
-      "repo_sha256": "6f7da967fa83dbb44d6cf6f93e2f6b178357ca154bc3160c1010d4cf7a7add34",
+      "repo_sha256": "11badd1f8a9405be763715105659a600ffbe96233e209fba88717095cc641122",
       "kit_sha256": "e6e636dbdd3e26c727aff5045c8d50427d79c41011b0c6ace1172e76ca099e0f",
       "adapted": true,
       "adapted_why": "the kit's log verbatim, with this repo's own three 2026-09-22 entries inserted above the kit's newest entry (the CMake project(VERSION) form, the unaccountable build/ tree, and the .clang-format residue)"
