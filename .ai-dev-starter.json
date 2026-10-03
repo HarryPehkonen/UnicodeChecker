@@ -35,9 +35,10 @@
     {
       "repo_path": "tools/ci.sh",
       "kit_path": "templates/cpp/ci.sh",
-      "repo_sha256": "166e0042aa81ce24874c994a756e0c62d435da31398cd8d79d81d7600e554191",
+      "repo_sha256": "9bcc5e12986d77b7fe33b8f654783265c2f7d48c489400e3ebf13783b44eb910",
       "kit_sha256": "166e0042aa81ce24874c994a756e0c62d435da31398cd8d79d81d7600e554191",
-      "adapted": false
+      "adapted": true,
+      "adapted_why": "one stage added, this repo's own: `install` asserts the two promises the CMake install rule makes -- that a plain configure defaults the prefix to the user's ~/.local (read out of a throwaway configure's cache, never by installing into the home directory) and that the binary lands in <prefix>/bin and runs from there. It is in CI_DEFAULT_STAGES after `version`, and the stage list in the header block was updated with it. Everything else is the kit template verbatim."
     },
     {
       "repo_path": ".ci.env.example",
@@ -63,7 +64,7 @@
     {
       "repo_path": "INCIDENTS.md",
       "kit_path": "INCIDENTS.md",
-      "repo_sha256": "05007c1e5a6b4fbaf350a7215b93b47c3a4318fd10c3eb218b066e24b236e824",
+      "repo_sha256": "8e3bdd05a0813cdf8ceb97f3b239d402e40a86b2ef16fe22be9d7f322440d124",
       "kit_sha256": "e6e636dbdd3e26c727aff5045c8d50427d79c41011b0c6ace1172e76ca099e0f",
       "adapted": true,
       "adapted_why": "the kit's log verbatim, with this repo's own three 2026-09-22 entries inserted above the kit's newest entry (the CMake project(VERSION) form, the unaccountable build/ tree, and the .clang-format residue)"

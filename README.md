@@ -26,6 +26,41 @@ cmake --build build --target unicode_checker_test && ./build/tests/unicode_check
 Every test uses in-memory `std::vector<uint8_t>` buffers, so no fixture files
 are needed.
 
+## Install
+
+```sh
+cmake --build build --target install     # or: make -C build install
+```
+
+That installs `unicode_checker` into **`~/.local/bin`**: the default prefix is the user's own
+`~/.local`, because this is a tool one person runs and a system-wide copy should be a
+deliberate choice rather than the accident of a bare `cmake`. Say otherwise either way:
+
+```sh
+cmake -S . -B build -DCMAKE_INSTALL_PREFIX=/usr/local    # at configure time
+cmake --install build --prefix /usr/local                # at install time, no reconfigure
+```
+
+The gate's `install` stage asserts both halves of that contract — the default prefix, and
+that the binary actually lands in `<prefix>/bin` and runs from there — without installing
+anything into your home directory.
+
+Uninstalling is `rm ~/.local/bin/unicode_checker`. One file is installed, and a target for
+that would be more machinery than the job needs.
+
+## Other targets
+
+| Target | What it does |
+|---|---|
+| `install` | as above |
+| `check` | runs `tools/ci.sh` — the full gate, so `make check` and `git push` cannot disagree |
+| `format` | `clang-format -i` over `src/` and `tests/`, using the `.clang-format` the gate enforces |
+| `examples` | runs the checker over every file in `examples/` |
+| `test` | ctest, from `enable_testing()` |
+| `clean` | CMake's own |
+
+Every one of them is `cmake --build build --target <name>`, or `make -C build <name>`.
+
 ## Usage
 
 ```sh
