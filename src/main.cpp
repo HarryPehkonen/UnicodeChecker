@@ -1,25 +1,11 @@
 #include <cstdint>
-#include <fstream>
 #include <iostream>
-#include <iterator>
 #include <string>
 #include <vector>
 
+#include "read_file.h"
 #include "report.h"
 #include "version.hpp"
-
-namespace {
-
-bool read_file(const std::string& path, std::vector<std::uint8_t>& bytes) {
-    std::ifstream file(path, std::ios::binary);
-    if (!file) {
-        return false;
-    }
-    bytes.assign(std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>());
-    return !file.bad();
-}
-
-}  // namespace
 
 int main(int argc, char** argv) {
     if (argc != 2) {
@@ -35,7 +21,7 @@ int main(int argc, char** argv) {
     }
 
     std::vector<std::uint8_t> bytes;
-    if (!read_file(path, bytes)) {
+    if (!uc::read_file(path, bytes)) {
         std::cerr << "unicode_checker: cannot read '" << path << "'\n";
         return 1;
     }

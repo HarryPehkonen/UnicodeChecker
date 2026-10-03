@@ -64,7 +64,7 @@
     {
       "repo_path": "INCIDENTS.md",
       "kit_path": "INCIDENTS.md",
-      "repo_sha256": "8e3bdd05a0813cdf8ceb97f3b239d402e40a86b2ef16fe22be9d7f322440d124",
+      "repo_sha256": "6f7da967fa83dbb44d6cf6f93e2f6b178357ca154bc3160c1010d4cf7a7add34",
       "kit_sha256": "e6e636dbdd3e26c727aff5045c8d50427d79c41011b0c6ace1172e76ca099e0f",
       "adapted": true,
       "adapted_why": "the kit's log verbatim, with this repo's own three 2026-09-22 entries inserted above the kit's newest entry (the CMake project(VERSION) form, the unaccountable build/ tree, and the .clang-format residue)"

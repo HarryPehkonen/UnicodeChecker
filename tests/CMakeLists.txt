@@ -10,6 +10,7 @@ add_executable(unicode_checker_test
     nul_test.cpp
     tags_test.cpp
     examples_test.cpp
+    read_file_test.cpp
 )
 target_link_libraries(unicode_checker_test PRIVATE unicode_checker_core GTest::gtest)
 

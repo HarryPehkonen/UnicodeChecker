@@ -14,6 +14,33 @@ arbitrary checks get deleted. The rationale is the load-bearing part.
 
 ---
 
+## 2026-09-22 — a directory argument aborted the tool instead of being reported
+
+What broke:        `unicode_checker .` printed
+                   `terminate called after throwing an instance of 'std::__ios_failure'` /
+                   `what(): basic_filebuf::underflow error reading the file: Is a directory`
+                   and died with SIGABRT (exit 134). A missing path was fine — `cannot read
+                   '...'`, exit 1 — so the failure was specific to a path that OPENS but cannot
+                   be read: an ifstream opens a directory on Linux, and the error only arrives
+                   later, out of the stream buffer, inside std::istreambuf_iterator, where no
+                   catch was waiting. Found by accident, running the freshly installed binary
+                   against a directory while checking the install target.
+Check added:       `src/read_file.{h,cpp}` moves the read into the core library, where the
+                   detectors already live so they can be tested, and turns any read failure
+                   into `false`; the CLI prints its usual message and exits 1.
+                   `tests/read_file_test.cpp` asserts the class rather than the instance: a
+                   missing path and a directory both return false without throwing, a real
+                   file is read whole in binary mode, NUL bytes survive the read, and the bytes
+                   read are the bytes `analyze()` reports. Sabotage-tested — removing the guard
+                   makes `ADirectoryIsReportedAndNotThrown` fail by aborting the process.
+Why it must stay:  A tool whose whole output is a judgement about its input cannot die on the
+                   input. `unicode_checker .` is the slip a person makes, and an uncaught
+                   exception is a crash where one line of message belongs. Every future read
+                   path (stdin, a second file, a directory walk) inherits this contract through
+                   `read_file`, which is the point of moving it out of `main.cpp`.
+
+---
+
 ## 2026-09-22 — the examples were generated wrong twice, and nothing about the bytes looked wrong
 
 What broke:        The demo files in `examples/` are hand-built bytes, and two of the

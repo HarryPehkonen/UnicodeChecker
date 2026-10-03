@@ -20,6 +20,7 @@ add_library(unicode_checker_core
     src/detect_nul.cpp
     src/detect_tags.cpp
     src/report.cpp
+    src/read_file.cpp
 )
 target_include_directories(unicode_checker_core
     PUBLIC

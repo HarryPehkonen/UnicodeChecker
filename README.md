@@ -69,7 +69,9 @@ unicode_checker --version        # or -V
 ```
 
 Output goes to stdout. Exit status is `0` on success even when findings are
-reported, `1` when the file cannot be read, and `2` on a usage error.
+reported, `1` when the file cannot be read — a missing path, an unreadable one, or a
+directory, each of which is reported as `cannot read '<path>'` rather than raised as an
+exception — and `2` on a usage error.
 
 The version number has one source, `project(unicode_checker VERSION ...)` in
 `CMakeLists.txt`; `cmake/version.hpp.in` is configured into the build tree as
