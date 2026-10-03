@@ -1,0 +1,7 @@
+overlong slash: À¯
+lone continuation: €
+invalid start byte: ø
+invalid continuation: âA
+surrogate U+D800: í €
+beyond U+10FFFF: ô€€
+truncated at the end: ğŸ

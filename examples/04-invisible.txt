@@ -1,0 +1,5 @@
+Invoice 12​34 approved.
+Item: co­operate with the supplier.
+Download: report‮txt.exe
+Joined⁠by a word joiner.
+A stray ﻿mid-file, so not a byte order mark.

@@ -14,6 +14,40 @@ arbitrary checks get deleted. The rationale is the load-bearing part.
 
 ---
 
+## 2026-09-22 — the examples were generated wrong twice, and nothing about the bytes looked wrong
+
+What broke:        The demo files in `examples/` are hand-built bytes, and two of the
+                   generator's mistakes produced files that looked plausible and demonstrated
+                   the opposite of what the table said.
+                   (1) `06-tags-flag-vs-hidden.txt` was written to carry the England
+                   subdivision flag, and the tool reported its flag run as **hidden text**
+                   (`Tag characters: 10 (hidden text: 10, inside emoji flag sequences: 0)`).
+                   The generator used a four-digit escape for the cancel tag — `\ue007f` is
+                   U+E007 followed by a literal `f`, where U+E007F needs eight hex digits.
+                   The result was one byte off (`f3 a0 80 87` instead of `f3 a0 81 bf`), which
+                   is invisible in a hex dump unless you are reading it closely.
+                   (2) The raw-byte escapes in `03-utf8-defects.txt`, `07-noncharacters.txt`
+                   and `10-everything-at-once.bin` were written as *characters* (`"\xc0\xaf"`),
+                   which the encoder turned into valid two-byte UTF-8 — so the files that were
+                   supposed to be invalid UTF-8 reported `Valid UTF-8: yes` and zero defects.
+                   One class, two dialects: an escape is only as long as the language's
+                   grammar says it is, and "it looks like bytes in the source" is not
+                   evidence that bytes were written. (The C++ half of this class is the
+                   greedy hex escape in the case-mapping notes.)
+Check added:       `tests/examples_test.cpp` asserts what each file *demonstrates* — the
+                   classification (`runs[0].flag_sequence == true`), the payloads, the
+                   per-class defect counts, the NUL ratio — not that the file exists and is
+                   readable. A test that only opened the files would have passed on every one
+                   of these broken bytes.
+Why it must stay:  The examples are the tool's own demonstration of itself, and an example
+                   that shows the wrong branch teaches the reader the wrong behaviour
+                   silently. The flag exception is the subtle part of the tags detector
+                   precisely because a bad tag run is byte-plausible; the same goes for a
+                   "broken" UTF-8 file that happens to be well-formed. The assertions are
+                   the only thing that distinguishes a demo from a claim.
+
+---
+
 ## 2026-09-22 — `project(<name> VERSION x.y.z CXX)` does not configure at all
 
 What broke:        Wiring the `version` stage needs a `project()` VERSION for the gate to parse, and

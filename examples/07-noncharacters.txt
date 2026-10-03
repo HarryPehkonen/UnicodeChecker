@@ -1,0 +1,5 @@
+noncharacter U+FDD0: ï·
+noncharacter U+FDEF: ï·¯
+noncharacter U+FFFF: ï¿¿
+C1 controls: Â“ and Â›
+lone surrogate U+D800: í €

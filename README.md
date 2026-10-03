@@ -81,6 +81,26 @@ size: 35 bytes
   Binary-like: no
 ```
 
+## Examples
+
+`examples/` holds ten small files, each demonstrating one part of the report: a clean
+ASCII baseline, a BOM, every UTF-8 defect class, invisible and bidi characters, the
+Plane 14 tags block (both the keyword-splitting trick and a legitimate subdivision
+flag), noncharacters, and NUL behaviour. `examples/README.md` says what each file
+shows, and how to see the bytes in an editor that renders the invisible characters as
+nothing.
+
+```sh
+./build/unicode_checker examples/05-tags-injection.txt
+
+# or all of them at once
+for f in examples/*; do echo "== $f"; ./build/unicode_checker "$f"; done
+```
+
+Every example is checked by `tests/examples_test.cpp`, which asserts what the file
+*demonstrates* rather than that it exists — so an example cannot quietly stop showing
+what it claims.
+
 ## Detectors
 
 Each detector is a standalone unit with its own header, and each is tested on
@@ -214,6 +234,7 @@ src/detect_tags.*       Unicode Tags block (Plane 14) and its payloads
 src/detect_nonchar.*    noncharacters, surrogates, C1 controls
 src/detect_nul.*        NUL counting and UTF-16 interleave heuristics
 src/report.*            Report struct, accumulator, plain-text formatter
+examples/               ten demo files, and the guide to reading them
 tests/                  one Google Test file per detector
 ```
 
