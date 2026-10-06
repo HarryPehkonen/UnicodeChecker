@@ -14,6 +14,33 @@ arbitrary checks get deleted. The rationale is the load-bearing part.
 
 ---
 
+## 2026-10-06 — the fast tier was the one list still written twice
+
+What broke:        The pre-commit hook spelled `build tests`. The entry below removed the list from
+                   the PUSH hook and left the gate holding one definition, so a stage added to
+                   `CI_DEFAULT_STAGES` reached a push — but the fast tier was still two stage names
+                   written inside `.githooks/pre-commit`, and nothing could tell whether it had
+                   drifted. It had already cost something real: in FSMTable the same hand-written
+                   fast tier (`build tests`, no `format`) passed a commit whose files clang-format
+                   would have rewritten, and only the full run caught it, after it was pushed.
+Check added:       `tools/ci.sh` declares `CI_FAST_STAGES` and `CI_FULL_STAGES`; the pre-commit hook
+                   names the tier (`tools/ci.sh fast`) instead of repeating it; and
+                   `tools/kit-probes/hook-tiers-agree.sh` runs in the `kitprobes` stage, failing when
+                   a hook names a stage, when a stage the gate defines is in no tier, when the fast
+                   tier is not a subset of the full one, or when the lists printed in the header
+                   block stop matching the variables. `format` joins the fast tier for the reason
+                   above: it is the check that would have caught that commit. `coverage`-style
+                   opt-in stages stay exempt, because the gate says so in its own `--list`.
+Why it must stay:  With the list back inside the hook, adding a stage to the gate and forgetting
+                   the hook is silent again — the hook still runs, still passes, and still prints
+                   GATE PASSED about a stage set it left out. The probe is what makes the two files
+                   agree; without it they agree only while someone remembers.
+                   (The sibling probe `optimized-stage.sh` is refreshed in the same commit: its R5
+                   read the `CI_DEFAULT_STAGES` line literally, so the indirection added here would
+                   have turned it red while the list itself was unchanged.)
+
+---
+
 ## 2026-09-22 — the push gate ran eleven stages of twelve, and said GATE PASSED
 
 What broke:        The `install` stage was added to `tools/ci.sh` and to `CI_DEFAULT_STAGES`,

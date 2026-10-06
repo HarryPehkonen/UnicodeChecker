@@ -18,7 +18,7 @@
 #
 # Two tiers, because a C++ full run is minutes and a commit cannot afford minutes:
 #
-#   fast  (pre-commit)  build tests
+#   fast  (pre-commit)  format build tests
 #   full  (pre-push)    --require-clean tree format kitprobes build tests release version
 #                       install asan tsan tidy pristine
 #
@@ -73,7 +73,13 @@ CI_TSAN_BUILD_DIR=${CI_TSAN_BUILD_DIR:-build-tsan}
 CI_LOG_DIR=${CI_LOG_DIR:-.ci-logs}
 CI_STRICT_TOOLS=${CI_STRICT_TOOLS:-0}           # 1 = a missing tool fails instead of SKIPping
 CI_KEEP_TMP=${CI_KEEP_TMP:-0}                   # 1 = keep the pristine temp dir for inspection
-CI_DEFAULT_STAGES=${CI_DEFAULT_STAGES:-"tree format kitprobes build tests release version install asan tsan tidy pristine"}
+# The two hook tiers, ONE definition each. Both hooks name a tier instead of repeating a list, so a
+# stage added below cannot be run by a hand run and skipped by a push (or the reverse). The incident
+# of 2026-09-22 already removed the list from the PUSH hook; this removes the last copy, from the
+# commit hook. The comment block above is what probes/hook-tiers-agree.sh compares these against.
+CI_FAST_STAGES=${CI_FAST_STAGES:-"format build tests"}
+CI_FULL_STAGES=${CI_FULL_STAGES:-"tree format kitprobes build tests release version install asan tsan tidy pristine"}
+CI_DEFAULT_STAGES=${CI_DEFAULT_STAGES:-$CI_FULL_STAGES}
 CI_TIDY_BASELINE=${CI_TIDY_BASELINE:-.ci/tidy-baseline.txt}
 CI_BUILD_TYPE=${CI_BUILD_TYPE:-Debug}
 # The SECOND configuration, built and tested by the `release` stage. A gate whose every
@@ -785,6 +791,8 @@ while [ $# -gt 0 ]; do
         --strict-tools) CI_STRICT_TOOLS=1 ;;
         --write-tidy-baseline) WRITE_TIDY_BASELINE=1 ;;
         -*) printf 'unknown option: %s (try --help)\n' "$1" >&2; exit 2 ;;
+        fast) STAGES_REQUESTED+=($CI_FAST_STAGES) ;;
+        full) STAGES_REQUESTED+=($CI_FULL_STAGES) ;;
         *) STAGES_REQUESTED+=("$1") ;;
     esac
     shift
