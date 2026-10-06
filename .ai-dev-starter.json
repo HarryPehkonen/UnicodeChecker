@@ -1,10 +1,10 @@
 {
   "kit": "AI-DEV-STARTER",
   "url": "https://github.com/HarryPehkonen/AI-DEV-STARTER",
-  "revision": "9f3ff726ae5bcf0b45ccde51d2582a6dd0b0edab",
+  "revision": "919006ecf90cfcc7627e008c6bee165754962d93",
   "recorded_at": "2026-09-22",
   "record_kind": "at-copy",
-  "record_note": "UnicodeChecker was wired to the kit on 2026-09-22 on branch process/plunk-in-the-gate, taking every artifact below from kit revision 9f3ff726 in one sitting (PLUNK-IN rung 5). CLAUDE.md is deliberately absent: the kit's rung-1 contract requires Harri's explicit approval and he was not present for this run, so no CLAUDE.md or AGENTS.md was created and none is listed here. INCIDENTS.md is the one adapted file -- the kit's log verbatim plus this repo's own entries on top. The adopted_fixes[] block was added by the follow-up record-only commit named in adopted_in, because a commit cannot name itself. A draft agent contract sits in CLAUDE_PROPOSED.md for Harri to accept or reject; it is not listed here because nothing was copied for it -- if he adopts it as CLAUDE.md it becomes a files[] entry (templates/CLAUDE.md.template, adapted).",
+  "record_note": "UnicodeChecker was wired to the kit on 2026-09-22 on branch process/plunk-in-the-gate, taking every artifact below from kit revision 9f3ff726 in one sitting (PLUNK-IN rung 5). CLAUDE.md is deliberately absent: the kit's rung-1 contract requires Harri's explicit approval and he was not present for this run, so no CLAUDE.md or AGENTS.md was created and none is listed here. INCIDENTS.md is the one adapted file -- the kit's log verbatim plus this repo's own entries on top. The adopted_fixes[] block was added by the follow-up record-only commit named in adopted_in, because a commit cannot name itself. A draft agent contract sits in CLAUDE_PROPOSED.md for Harri to accept or reject; it is not listed here because nothing was copied for it -- if he adopts it as CLAUDE.md it becomes a files[] entry (templates/CLAUDE.md.template, adapted). **2026-10-06, hook-tier port:** adopted_fixes gains hook-tiers-agree and the record's revision moves to 919006e, the kit commit the two probes in tools/kit-probes/ are carried from verbatim \u2014 the convention's rule is that a revision that moves re-verifies the WHOLE copy, so every kit_sha256 here is re-read at that copy point, not just the new file. tools/ci.sh remains this repo's own adaptation of the template (see its adapted_why); the port added CI_FAST_STAGES/CI_FULL_STAGES and the `fast`/`full` arguments to it, and the pre-commit hook now names the tier. optimized-stage.sh had to be refreshed with the probe: its R5 read the CI_DEFAULT_STAGES line literally and would have failed on the unchanged list.",
   "adopted_fixes": [
     {
       "name": "tidy-baseline",
@@ -20,7 +20,7 @@
     },
     {
       "name": "optimized-stage",
-      "from_revision": "d531a110184125ed108c3eabc36834bb803404bb",
+      "from_revision": "919006ecf90cfcc7627e008c6bee165754962d93",
       "probe": "probes/optimized-stage.sh",
       "adopted_in": "feac533"
     },
@@ -29,14 +29,20 @@
       "from_revision": "f9c33005d880df095d7a5ab300d1ec5349c59aea",
       "probe": "probes/git-index-file.sh",
       "adopted_in": "feac533"
+    },
+    {
+      "name": "hook-tiers-agree",
+      "from_revision": "919006ecf90cfcc7627e008c6bee165754962d93",
+      "probe": "probes/hook-tiers-agree.sh",
+      "adopted_in": "e79e031"
     }
   ],
   "files": [
     {
       "repo_path": "tools/ci.sh",
       "kit_path": "templates/cpp/ci.sh",
-      "repo_sha256": "9bcc5e12986d77b7fe33b8f654783265c2f7d48c489400e3ebf13783b44eb910",
-      "kit_sha256": "166e0042aa81ce24874c994a756e0c62d435da31398cd8d79d81d7600e554191",
+      "repo_sha256": "a7f50f809d1c6ee0e1faf80e0327f7830aeaa62ebef4416fea1f9abd90279584",
+      "kit_sha256": "da4c8a4085b06f2e710ca36a8c4818cf417875633706d7ea78014789c6544021",
       "adapted": true,
       "adapted_why": "one stage added, this repo's own: `install` asserts the two promises the CMake install rule makes -- that a plain configure defaults the prefix to the user's ~/.local (read out of a throwaway configure's cache, never by installing into the home directory) and that the binary lands in <prefix>/bin and runs from there. It is in CI_DEFAULT_STAGES after `version`, and the stage list in the header block was updated with it. Everything else is the kit template verbatim."
     },
@@ -50,22 +56,23 @@
     {
       "repo_path": ".githooks/pre-commit",
       "kit_path": "templates/hooks/pre-commit",
-      "repo_sha256": "e304ddcb48e216029c8e77402d927695dae4895532f6bf12d1ecb54604b652d8",
-      "kit_sha256": "e304ddcb48e216029c8e77402d927695dae4895532f6bf12d1ecb54604b652d8",
-      "adapted": false
+      "repo_sha256": "295605dd9f3ca555a347b1013a8c165156bd32d366e284082691137f0b8800cb",
+      "kit_sha256": "c87ea669b3716917a8de098697107b2afe867fbbdd519d5db68ce077f24e445e",
+      "adapted": true,
+      "adapted_why": "the port gives the commit hook the fast tier's NAME instead of the kit's explicit stage list. The kit ships the explicit list on purpose; measured here it is the spelling that goes stale -- the 2026-09-22 incident in INCIDENTS.md is exactly that list falling a stage behind, and FSMTable's fast tier cost a pushed commit that clang-format would have rewritten. So: one list in tools/ci.sh, N callers naming a tier."
     },
     {
       "repo_path": ".githooks/pre-push",
       "kit_path": "templates/hooks/pre-push",
       "repo_sha256": "1b9c5910f8ce7688013e57fd3bf74cb38ad3eca7b647becdafac15bf22931e65",
-      "kit_sha256": "f3ee3909b042ba74728f09b8c68aa2a82f23fe212ebea1f79aae89f5cef9ca07",
+      "kit_sha256": "ad7380d39fc6c425d2ced5972be828832f704d395fbd17d3676768bfa33dcf10",
       "adapted": true,
       "adapted_why": "no stage list: the hook calls `tools/ci.sh --require-clean`, so a push runs whatever CI_DEFAULT_STAGES says. The kit ships an explicit list on purpose (so a stage cannot be silently dropped); measured here, the explicit list instead went STALE the moment a stage was added -- the push ran 11 of 12 stages and printed GATE PASSED. One definition, N callers."
     },
     {
       "repo_path": "INCIDENTS.md",
       "kit_path": "INCIDENTS.md",
-      "repo_sha256": "11badd1f8a9405be763715105659a600ffbe96233e209fba88717095cc641122",
+      "repo_sha256": "0deec688b696b174dfd5fe4a6048d7b2084434970825cac0689d95486865be4f",
       "kit_sha256": "e6e636dbdd3e26c727aff5045c8d50427d79c41011b0c6ace1172e76ca099e0f",
       "adapted": true,
       "adapted_why": "the kit's log verbatim, with this repo's own three 2026-09-22 entries inserted above the kit's newest entry (the CMake project(VERSION) form, the unaccountable build/ tree, and the .clang-format residue)"
@@ -87,8 +94,8 @@
     {
       "repo_path": "tools/kit-probes/optimized-stage.sh",
       "kit_path": "probes/optimized-stage.sh",
-      "repo_sha256": "d0d7a184ebbe7847c1366983b0b6ff72c86eb2ea2eaba130aa46b132b0a29c25",
-      "kit_sha256": "d0d7a184ebbe7847c1366983b0b6ff72c86eb2ea2eaba130aa46b132b0a29c25",
+      "repo_sha256": "9f81fa9f8f3bde0987dae5ff188dba26f00de203de3648a5f4ffe9d5b73907c2",
+      "kit_sha256": "9f81fa9f8f3bde0987dae5ff188dba26f00de203de3648a5f4ffe9d5b73907c2",
       "adapted": false
     },
     {
@@ -96,6 +103,13 @@
       "kit_path": "probes/tidy-baseline.sh",
       "repo_sha256": "efd9bbca108bb7bd1e527d95d09546c1b3bceca451054367b2fed6f92bfc6379",
       "kit_sha256": "efd9bbca108bb7bd1e527d95d09546c1b3bceca451054367b2fed6f92bfc6379",
+      "adapted": false
+    },
+    {
+      "repo_path": "tools/kit-probes/hook-tiers-agree.sh",
+      "kit_path": "probes/hook-tiers-agree.sh",
+      "repo_sha256": "736481101f4b9b4ce4379048c0be9c165b883ba7e27b424b3864aa32725564d1",
+      "kit_sha256": "736481101f4b9b4ce4379048c0be9c165b883ba7e27b424b3864aa32725564d1",
       "adapted": false
     }
   ]
