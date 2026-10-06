@@ -1,8 +1,8 @@
 {
   "kit": "AI-DEV-STARTER",
   "url": "https://github.com/HarryPehkonen/AI-DEV-STARTER",
-  "revision": "919006ecf90cfcc7627e008c6bee165754962d93",
-  "recorded_at": "2026-09-22",
+  "revision": "98e517d3655919c44d0a8df936b16c430281acfe",
+  "recorded_at": "2026-10-06",
   "record_kind": "at-copy",
   "record_note": "UnicodeChecker was wired to the kit on 2026-09-22 on branch process/plunk-in-the-gate, taking every artifact below from kit revision 9f3ff726 in one sitting (PLUNK-IN rung 5). CLAUDE.md is deliberately absent: the kit's rung-1 contract requires Harri's explicit approval and he was not present for this run, so no CLAUDE.md or AGENTS.md was created and none is listed here. INCIDENTS.md is the one adapted file -- the kit's log verbatim plus this repo's own entries on top. The adopted_fixes[] block was added by the follow-up record-only commit named in adopted_in, because a commit cannot name itself. A draft agent contract sits in CLAUDE_PROPOSED.md for Harri to accept or reject; it is not listed here because nothing was copied for it -- if he adopts it as CLAUDE.md it becomes a files[] entry (templates/CLAUDE.md.template, adapted). **2026-10-06, hook-tier port:** adopted_fixes gains hook-tiers-agree and the record's revision moves to 919006e, the kit commit the two probes in tools/kit-probes/ are carried from verbatim \u2014 the convention's rule is that a revision that moves re-verifies the WHOLE copy, so every kit_sha256 here is re-read at that copy point, not just the new file. tools/ci.sh remains this repo's own adaptation of the template (see its adapted_why); the port added CI_FAST_STAGES/CI_FULL_STAGES and the `fast`/`full` arguments to it, and the pre-commit hook now names the tier. optimized-stage.sh had to be refreshed with the probe: its R5 read the CI_DEFAULT_STAGES line literally and would have failed on the unchanged list.",
   "adopted_fixes": [
@@ -35,14 +35,20 @@
       "from_revision": "919006ecf90cfcc7627e008c6bee165754962d93",
       "probe": "probes/hook-tiers-agree.sh",
       "adopted_in": "e79e031"
+    },
+    {
+      "name": "format-checks-staged",
+      "from_revision": "96719c4",
+      "probe": "probes/format-checks-staged.sh",
+      "adopted_in": "a04d251"
     }
   ],
   "files": [
     {
       "repo_path": "tools/ci.sh",
       "kit_path": "templates/cpp/ci.sh",
-      "repo_sha256": "a7f50f809d1c6ee0e1faf80e0327f7830aeaa62ebef4416fea1f9abd90279584",
-      "kit_sha256": "da4c8a4085b06f2e710ca36a8c4818cf417875633706d7ea78014789c6544021",
+      "repo_sha256": "0df2bf9651e014be8405fdcbf191b0d75102356a50dd4aaedf93808379c903fb",
+      "kit_sha256": "b50a5a82b13464932cea058b5b5eca5a93c2474f2a089fea82392271d12db018",
       "adapted": true,
       "adapted_why": "one stage added, this repo's own: `install` asserts the two promises the CMake install rule makes -- that a plain configure defaults the prefix to the user's ~/.local (read out of a throwaway configure's cache, never by installing into the home directory) and that the binary lands in <prefix>/bin and runs from there. It is in CI_DEFAULT_STAGES after `version`, and the stage list in the header block was updated with it. Everything else is the kit template verbatim."
     },
@@ -110,6 +116,12 @@
       "kit_path": "probes/hook-tiers-agree.sh",
       "repo_sha256": "736481101f4b9b4ce4379048c0be9c165b883ba7e27b424b3864aa32725564d1",
       "kit_sha256": "736481101f4b9b4ce4379048c0be9c165b883ba7e27b424b3864aa32725564d1",
+      "adapted": false
+    },
+    {
+      "repo_path": "tools/kit-probes/format-checks-staged.sh",
+      "kit_path": "probes/format-checks-staged.sh",
+      "repo_sha256": "513e9231c31cbc9cb2faa0576fcbc7459f75967b79654825ffc8a648ab29c657",
       "adapted": false
     }
   ]
