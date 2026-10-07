@@ -83,7 +83,15 @@ if [ -f .ci.env ]; then
     . ./.ci.env
 fi
 
-REQUIRE_CLEAN=0
+
+# The old tools/ci.sh took these as FLAGS (--require-clean, --changed, --extra-checks,
+# --write-tidy-baseline, --write-coverage-baseline). kit-ci's vocabulary has no per-run flags
+# for a stage: a caller sets the knob in the ENVIRONMENT it launches the gate with, and the
+# default below is what the script had. .githooks/pre-push does exactly that with
+# CI_REQUIRE_CLEAN=1. (Until this line the assignment overwrote whatever the caller exported,
+# so the push hook's flag-as-env-var had no effect at all - measured 2026-10-06.)
+
+REQUIRE_CLEAN=${CI_REQUIRE_CLEAN:-0}
 ALLOW_UNTRACKED=0
 WRITE_TIDY_BASELINE=0
 STAGES_REQUESTED=()

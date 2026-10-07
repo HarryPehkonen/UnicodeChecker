@@ -67,6 +67,7 @@ timeout = 0     # a cold compile on a slow machine is not a failure
 
 [stage.tidy]
 cmd = "scripts/tidy.sh"
+timeout = 0     # a cold compile on a slow machine is not a failure
 when = "tool:clang-tidy"
 
 [stage.pristine]
