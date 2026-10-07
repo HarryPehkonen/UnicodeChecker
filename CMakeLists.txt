@@ -61,10 +61,10 @@ install(TARGETS unicode_checker RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 # check — the repo's gate, through its one script. Same verdict as the git hooks print,
 # so "make check" and "git push" cannot disagree about whether this tree is good.
 add_custom_target(check
-    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/tools/ci.sh
+    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/scripts/gate.sh
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     USES_TERMINAL
-    COMMENT "running tools/ci.sh (the full gate)"
+    COMMENT "running scripts/gate.sh (the full gate)"
 )
 
 # format — clang-format over the whole tree. The gate's format stage checks only the

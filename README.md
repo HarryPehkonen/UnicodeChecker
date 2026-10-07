@@ -53,7 +53,7 @@ that would be more machinery than the job needs.
 | Target | What it does |
 |---|---|
 | `install` | as above |
-| `check` | runs `tools/ci.sh` — the full gate, so `make check` and `git push` cannot disagree |
+| `check` | runs `scripts/gate.sh` — the full gate, so `make check` and `git push` cannot disagree |
 | `format` | `clang-format -i` over `src/` and `tests/`, using the `.clang-format` the gate enforces |
 | `examples` | runs the checker over every file in `examples/` |
 | `test` | ctest, from `enable_testing()` |
@@ -244,8 +244,8 @@ kit (rung 5); `.ai-dev-starter.json` records the kit revision and the SHA-256 of
 every copied artifact.
 
 ```sh
-tools/ci.sh                     # the full tier
-tools/ci.sh build tests         # the fast tier, what pre-commit runs
+scripts/gate.sh                     # the full tier
+scripts/gate.sh --tier fast         # the fast tier, what pre-commit runs
 ```
 
 The two git hooks live in `.githooks/` and have to be armed once per clone —

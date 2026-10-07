@@ -13,8 +13,8 @@ means: one `unicode_checker <file>` run prints every section, and the gate print
 | What | Command |
 |---|---|
 | Configure + build | `cmake -S . -B build && cmake --build build -j"$(nproc)"` |
-| Run the gate (do this before you claim anything works) | `tools/ci.sh` |
-| Fast tier — what a commit runs | `tools/ci.sh build tests` |
+| Run the gate (do this before you claim anything works) | `scripts/gate.sh` |
+| Fast tier — what a commit runs | `scripts/gate.sh --tier fast` |
 | Tests only | `ctest --test-dir build --output-on-failure` |
 | Format the files you touched | `clang-format -i <files>` |
 | Run it locally | `./build/unicode_checker <file>` |
@@ -94,7 +94,7 @@ in `analyze()`, one section in `format_report()`, and the file in `CMakeLists.tx
   twice.
 - Do not edit generated files: `build/generated/version.hpp`. Change `cmake/version.hpp.in`.
 - Do not print raw control bytes into the report — render them readably (`<U+E0001>`, `<CANCEL TAG>`).
-- Do not edit `tools/ci.sh` while a run of it is in flight, and never "fix" the gate by deleting a
+- Do not edit `scripts/gate.sh` while a run of it is in flight, and never "fix" the gate by deleting a
   check. Every check carries its incident in `INCIDENTS.md`; argue in a comment instead.
 
 ## Incidents
